@@ -1,0 +1,245 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// Datos de ejemplo simulando documentos, formatos y guías de autogestión
+const herramientas = [
+  {
+    titulo: "Portal Web Autogestión (Novasoft)",
+    descripcion: "Acceso directo para la gestión de certificados laborales, desprendibles de nómina y solicitudes de personal.",
+    categoria: "Portales",
+    icono: "🌐",
+    enlace: "#",
+    tags: ["nomina", "certificados", "gh", "talento humano"]
+  },
+  {
+    titulo: "Guía de Parametrización de Sistemas",
+    descripcion: "Manual técnico detallado para la configuración inicial de módulos, roles y permisos de usuarios.",
+    categoria: "Guías Técnicas",
+    icono: "⚙️",
+    enlace: "#",
+    tags: ["configuracion", "roles", "parametros", "ti"]
+  },
+  {
+    titulo: "Formato de Reportes Mensuales",
+    descripcion: "Plantilla oficial Excel para consolidación de actividades y cierre de periodos de servicios prestados.",
+    categoria: "Formatos",
+    icono: "📊",
+    enlace: "#",
+    tags: ["excel", "reportes", "formatos", "gestion"]
+  },
+  {
+    titulo: "Políticas de Seguridad de la Información",
+    descripcion: "Lineamientos institucionales basados en normas internacionales para el uso correcto de activos tecnológicos.",
+    categoria: "Seguridad",
+    icono: "🛡️",
+    enlace: "#",
+    tags: ["iso 27001", "seguridad", "politicas", "it"]
+  },
+  {
+    titulo: "Manual de Métricas y Gobierno de TI",
+    descripcion: "Estructuras y buenas prácticas para la gestión del ciclo de vida de los proyectos de tecnología.",
+    categoria: "Gobierno TI",
+    icono: "🏛️",
+    enlace: "#",
+    tags: ["cobit", "itil", "gobierno", "proyectos"]
+  }
+];
+
+const categorias = ["Todos", "Portales", "Guías Técnicas", "Formatos", "Seguridad", "Gobierno TI"];
+---
+
+<Layout title="Centro de Autogestión Documental">
+  <div class="min-h-screen bg-gray-50 text-gray-800 font-sans">
+    
+    <!-- HEADER / BANNER PRINCIPAL -->
+    <header class="bg-gradient-to-r from-slate-800 to-indigo-900 text-white shadow-md">
+      <div class="max-w-7xl mx-auto px-6 py-12 text-center md:text-left md:flex md:items-center md:justify-between gap-6">
+        <div class="max-w-2xl">
+          <h1 class="text-4xl font-extrabold tracking-tight">Centro de Autogestión de Información</h1>
+          <p class="mt-3 text-lg text-indigo-100">
+            Accede de forma autónoma a documentación técnica, formatos institucionales, políticas de gobierno y accesos directos a portales corporativos.
+          </p>
+        </div>
+        
+        <!-- Estadísticas Rápidas -->
+        <div class="mt-6 md:mt-0 flex gap-4 justify-center">
+          <div class="bg-white/10 backdrop-blur-md px-4 py-3 rounded-xl border border-white/10 text-center min-w-[100px]">
+            <span class="block text-2xl font-bold">{herramientas.length}</span>
+            <span class="text-xs text-indigo-200 uppercase tracking-wider">Recursos</span>
+          </div>
+          <div class="bg-white/10 backdrop-blur-md px-4 py-3 rounded-xl border border-white/10 text-center min-w-[100px]">
+            <span class="block text-2xl font-bold">24/7</span>
+            <span class="text-xs text-indigo-200 uppercase tracking-wider">Disponible</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- SECCIÓN DE BÚSQUEDA Y FILTROS -->
+    <section class="max-w-7xl mx-auto px-6 mt-8">
+      <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 md:flex md:items-center md:justify-between gap-4">
+        
+        <!-- Buscador -->
+        <div class="relative flex-1">
+          <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-400">
+            🔍
+          </span>
+          <input 
+            type="text" 
+            id="searchInput"
+            placeholder="Buscar por título, descripción o palabras clave (ej: nomina, excel, config)..." 
+            class="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all"
+          />
+        </div>
+
+        <!-- Filtros de Categoría Rápidos -->
+        <div class="flex gap-2 mt-3 md:mt-0 overflow-x-auto pb-1 md:pb-0 scrollbar-none" id="filterContainer">
+          {categorias.map((cat) => (
+            <button
+              data-category={cat}
+              class={`filter-btn whitespace-nowrap px-4 py-2 rounded-lg text-xs font-semibold tracking-wide transition-all ${
+                cat === "Todos" 
+                ? "bg-indigo-600 text-white shadow-sm" 
+                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTENEDOR DE TARJETAS / DOCUMENTOS -->
+    <main class="max-w-7xl mx-auto px-6 py-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="resourcesGrid">
+        
+        {herramientas.map((item) => (
+          <div 
+            class="resource-card bg-white rounded-xl border border-gray-200 shadow-sm p-6 flex flex-col justify-between hover:shadow-md hover:border-gray-300 transition-all"
+            data-category={item.categoria}
+            data-searchable={`${item.titulo.toLowerCase()} ${item.descripcion.toLowerCase()} ${item.tags.join(" ")}`}
+          >
+            <div>
+              <!-- Header Tarjeta -->
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-2xl p-2 bg-slate-100 rounded-lg">{item.icono}</span>
+                <span class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-100">
+                  {item.categoria}
+                </span>
+              </div>
+              
+              <!-- Cuerpo Tarjeta -->
+              <h3 class="text-lg font-bold text-gray-900 mt-4 leading-snug">{item.titulo}</h3>
+              <p class="text-sm text-gray-600 mt-2 leading-relaxed">{item.descripcion}</p>
+            </div>
+
+            <!-- Footer Tarjeta / Acción -->
+            <div class="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between">
+              <div class="flex flex-wrap gap-1">
+                {item.tags.slice(0, 2).map((tag) => (
+                  <span class="text-[10px] bg-gray-50 text-gray-500 px-2 py-0.5 rounded">#{tag}</span>
+                ))}
+              </div>
+              <a 
+                href={item.enlace} 
+                class="text-xs font-bold text-indigo-600 hover:text-indigo-800 inline-flex items-center gap-1 transition-colors"
+              >
+                Acceder <span>&rarr;</span>
+              </a>
+            </div>
+          </div>
+        ))}
+
+      </div>
+
+      <!-- Estado Vacío (Mensaje si no se encuentran resultados) -->
+      <div id="emptyState" class="hidden text-center py-16 bg-white rounded-xl border border-dashed border-gray-300">
+        <span class="text-4xl">📂</span>
+        <h3 class="mt-4 text-base font-semibold text-gray-900">No se encontraron documentos o recursos</h3>
+        <p class="mt-1 text-sm text-gray-500">Prueba ajustando los filtros o los términos de búsqueda.</p>
+      </div>
+    </main>
+
+  </div>
+</Layout>
+
+<script>
+  // LÓGICA DE INTERACTIVIDAD EN EL CLIENTE (Reactivo y Ultra Rápido)
+  document.addEventListener('astro:page-load', () => { // Compatible con Astro View Transitions si decides activarlo luego
+    const searchInput = document.getElementById('searchInput') as HTMLInputElement;
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.resource-card');
+    const emptyState = document.getElementById('emptyState');
+
+    let currentSearch = '';
+    let currentCategory = 'Todos';
+
+    function filterResources() {
+      let visibleCount = 0;
+
+      cards.forEach((card) => {
+        const htmlCard = card as HTMLElement;
+        const cardCategory = htmlCard.getAttribute('data-category') || '';
+        const searchableText = htmlCard.getAttribute('data-searchable') || '';
+
+        const matchesSearch = searchableText.includes(currentSearch);
+        const matchesCategory = currentCategory === 'Todos' || cardCategory === currentCategory;
+
+        if (matchesSearch && matchesCategory) {
+          htmlCard.style.display = 'flex';
+          visibleCount++;
+        } else {
+          htmlCard.style.display = 'none';
+        }
+      });
+
+      // Manejo del estado vacío
+      if (visibleCount === 0) {
+        emptyState?.classList.remove('hidden');
+      } else {
+        emptyState?.classList.add('hidden');
+      }
+    }
+
+    // Escucha del Buscador
+    searchInput?.addEventListener('input', (e) => {
+      currentSearch = (e.target as HTMLInputElement).value.toLowerCase().trim();
+      filterResources();
+    });
+
+    // Escucha de Filtros por Categoría
+    filterButtons.forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        const clickedBtn = e.currentTarget as HTMLButtonElement;
+        currentCategory = clickedBtn.getAttribute('data-category') || 'Todos';
+
+        // Actualizar estilos visuales de los botones de filtro
+        filterButtons.forEach((b) => {
+          b.classList.remove('bg-indigo-600', 'text-white', 'shadow-sm');
+          b.classList.add('bg-gray-100', 'text-gray-600', 'hover:bg-gray-200');
+        });
+        clickedBtn.classList.remove('bg-gray-100', 'text-gray-600', 'hover:bg-gray-200');
+        clickedBtn.classList.add('bg-indigo-600', 'text-white', 'shadow-sm');
+
+        filterResources();
+      });
+    });
+  });
+
+  // Ejecución inmediata en la carga inicial
+  if (typeof window !== 'undefined') {
+    document.dispatchEvent(new Event('astro:page-load'));
+  }
+</script>
+
+<style>
+  /* Ocultar barra de scroll en contenedores horizontales para una interfaz limpia */
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+</style>
